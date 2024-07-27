@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/skynet.dir/main.cpp.o CMakeFiles/skynet.dir/src/Service.cpp.o CMakeFiles/skynet.dir/src/SocketWorker.cpp.o CMakeFiles/skynet.dir/src/Sunnet.cpp.o CMakeFiles/skynet.dir/src/Worker.cpp.o -o skynet   -L/home/liyi/桌面/skynet/3rd/lua-5.4.7/src  -Wl,-rpath,/home/liyi/桌面/skynet/3rd/lua-5.4.7/src -Wl,-Bstatic -llua -Wl,-Bdynamic -ldl 

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <sys/uio.h>
+#include "../include/LuaAPI.h"
 using namespace std;
 // 构造函数
 Service::Service(){
@@ -36,7 +37,27 @@ std::shared_ptr<BaseMsg> Service::popMsg(){
 void Service::onInit(){
     cout << "[" << id  << "] onInit" << endl;
     // 开启监听
-    Sunnet::inst->listento(8080, id);
+    if( *type == "main"){
+        Sunnet::inst->listento(8080, id);
+    }
+    //新建lua虚拟机
+    luaState = luaL_newstate();
+    luaL_openlibs(luaState);
+    // 注册Sunnet系统API
+    LuaAPI::Register(luaState);
+    // 执行lua文件
+    string filename = "./service/" + *type + "/init.lua";
+    int isok = luaL_dofile(luaState, filename.data());
+    if(isok != 0){
+        cout << "run lua fail" << lua_tostring(luaState, -1) << endl;
+    }
+    // 调用lua函数
+    lua_getglobal(luaState, "OnInit");
+    lua_pushinteger(luaState, id);
+    isok = lua_pcall(luaState, 1, 0, 0);
+    if(isok != 0){
+        cout << "call lua OnInit fail" << lua_tostring(luaState, -1);
+    }
 }
 // 收到消息后触发
 void Service::onMsg(std::shared_ptr<BaseMsg> msg){
@@ -61,6 +82,14 @@ void Service::onMsg(std::shared_ptr<BaseMsg> msg){
 // 退出服务时触发
 void Service::onExit(){
     cout << "[" << id  << "] onExit" << endl;
+    // 调用lua函数
+    lua_getglobal(luaState, "OnExit");
+    int isok = lua_pcall(luaState, 0, 0, 0);
+    if(isok != 0){
+        cout << "call lua OnExit fail" << lua_tostring(luaState, -1) << endl;
+    }
+    // 关闭lua虚拟机
+    lua_close(luaState);
 }
 // 处理一条消息，返回值代表是否处理
 bool Service::processMsg(){
@@ -103,18 +132,35 @@ void Sunnet::send(unsigned int toId, std::shared_ptr<BaseMsg> msg){
         hasPush = true;
     }
     if(hasPush){
+        // 唤醒进程
         checkAndWeakUp();
     }
     inlock.unlock();
-    // 唤醒进程
 }
 // 收到其他服务发来的消息
 void Service::onServiceMsg(shared_ptr<ServiceMsg> msg){
     cout << "onServiceMsg" << endl;
+    // 调用lua函数
+    lua_getglobal(luaState, "OnServiceMsg");
+    lua_pushinteger(luaState, msg->source);
+    lua_pushlstring(luaState, (*msg->buff).c_str(), msg->size);
+    int isok = lua_pcall(luaState, 2, 0, 0);
+    if(isok != 0){
+        cout << "call lua OnserviceMsg fail" << lua_tostring(luaState, -1) 
+        << endl;
+    }
 }
 // 新连接
 void Service::onAcceptMsg(shared_ptr<SocketpAcceptMsg> msg){
     cout << "onAcceptMsg" << msg->clientfd << endl;
+    //调用Lua函数
+    lua_getglobal(luaState, "OnAcceptMsg"); 
+    lua_pushinteger(luaState, msg->listenfd); 
+    lua_pushinteger(luaState, msg->clientfd); 
+    int isok = lua_pcall(luaState, 2, 0, 0);
+    if(isok != 0){ //成功返回值为0，否则代表失败.
+         cout << "call lua OnAcceptMsg fail " << lua_tostring(luaState, -1) << endl;
+    }
 
 }
 // 套接字可读可写
@@ -164,7 +210,16 @@ void Service::onSocketData(int fd, const char* buff, int len){
         iov.iov_len -=len;
         cout << iov.iov_len << endl;
     }
-    cout << "send finish" << endl;
+/*
+    //调用Lua函数
+    lua_getglobal(luaState, "OnSocketData"); 
+    lua_pushinteger(luaState, fd); 
+    lua_pushlstring(luaState, buff,len); 
+    int isok = lua_pcall(luaState, 2, 0, 0);
+    if(isok != 0){ //成功返回值为0，否则代表失败.
+         cout << "call lua OnSocketData fail " << lua_tostring(luaState, -1) << endl;
+    }
+*/
 }
 // 套接字可写
 void Service::onSocketWritable(int fd){
@@ -173,4 +228,11 @@ void Service::onSocketWritable(int fd){
 // 关闭连接前
 void Service::onSocketClose(int fd){
     cout << "onSocketClose" << fd << endl;
+    //调用Lua函数
+    lua_getglobal(luaState, "OnSocketClose"); 
+    lua_pushinteger(luaState, fd); 
+    int isok = lua_pcall(luaState, 1, 0, 0);
+    if(isok != 0){ //成功返回值为0，否则代表失败.
+         cout << "call lua OnSocketClose fail " << lua_tostring(luaState, -1) << endl;
+    }
 }

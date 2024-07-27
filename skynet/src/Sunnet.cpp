@@ -92,9 +92,10 @@ shared_ptr<Service> Sunnet::popGlobalQueue(){
 }
 // 插入全局队列
 void Sunnet::pushGlobalQueue(std::shared_ptr<Service> srv){
-    std::unique_lock<mutex> lock(globallocker);
+    std::unique_lock<mutex> glock(globallocker);
     globalQueue.push(srv);
     globalLen++;
+    glock.unlock();
 }
 
 std::shared_ptr<BaseMsg> Sunnet::makeMsg(unsigned int source, std::string buff, int len){

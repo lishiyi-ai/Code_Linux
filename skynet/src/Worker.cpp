@@ -10,6 +10,7 @@ void Worker::operator()(){
             cout << "wait id:" << id << endl;
             Sunnet::inst->workWait();
         }else{
+            cout << "work id:" << id << endl;
             srv->processMsg(eachNum);
             checkAndPutGlobal(srv);
         }

@@ -14,7 +14,11 @@
                 "./src/Worker.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
-                "-lstdc++"
+                "-lstdc++",
+                "-L",
+                "../3rd/lua-5.4.7/src/",
+                "-lblua",
+                "-ldl"
             ],
             "options": {
                 "cwd": "${fileDirname}"

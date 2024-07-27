@@ -1,0 +1,5 @@
+/home/liyi/桌面/skynet/build/CMakeFiles/sunnet.dir
+/home/liyi/桌面/skynet/build/CMakeFiles/package.dir
+/home/liyi/桌面/skynet/build/CMakeFiles/package_source.dir
+/home/liyi/桌面/skynet/build/CMakeFiles/edit_cache.dir
+/home/liyi/桌面/skynet/build/CMakeFiles/rebuild_cache.dir

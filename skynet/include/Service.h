@@ -1,6 +1,10 @@
 #ifndef SERVICE_H
 #define SERVICE_H
-
+extern "C"{
+    #include "../3rd/lua-5.4.7/src/lua.h"
+    #include "../3rd/lua-5.4.7/src/lauxlib.h"
+    #include "../3rd/lua-5.4.7/src/lualib.h"
+}
 #include <queue>
 #include <thread>
 #include <mutex>
@@ -48,6 +52,9 @@ private:
     void onSocketData(int fd, const char* buff, int len);
     void onSocketWritable(int fd);
     void onSocketClose(int fd);
+private:
+    // lua虚拟机
+    lua_State *luaState;
 };
 
 #endif

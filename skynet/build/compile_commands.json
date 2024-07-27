@@ -1,0 +1,38 @@
+[
+{
+  "directory": "/home/liyi/桌面/skynet/build",
+  "command": "/usr/bin/c++  -I/home/liyi/桌面/skynet/include -I/home/liyi/桌面/skynet/./3rd/lua-5.3.5/src -g -o CMakeFiles/sunnet.dir/main.cpp.o -c /home/liyi/桌面/skynet/main.cpp",
+  "file": "/home/liyi/桌面/skynet/main.cpp",
+  "output": "CMakeFiles/sunnet.dir/main.cpp.o"
+},
+{
+  "directory": "/home/liyi/桌面/skynet/build",
+  "command": "/usr/bin/c++  -I/home/liyi/桌面/skynet/include -I/home/liyi/桌面/skynet/./3rd/lua-5.3.5/src -g -o CMakeFiles/sunnet.dir/src/LuaAPI.cpp.o -c /home/liyi/桌面/skynet/src/LuaAPI.cpp",
+  "file": "/home/liyi/桌面/skynet/src/LuaAPI.cpp",
+  "output": "CMakeFiles/sunnet.dir/src/LuaAPI.cpp.o"
+},
+{
+  "directory": "/home/liyi/桌面/skynet/build",
+  "command": "/usr/bin/c++  -I/home/liyi/桌面/skynet/include -I/home/liyi/桌面/skynet/./3rd/lua-5.3.5/src -g -o CMakeFiles/sunnet.dir/src/Service.cpp.o -c /home/liyi/桌面/skynet/src/Service.cpp",
+  "file": "/home/liyi/桌面/skynet/src/Service.cpp",
+  "output": "CMakeFiles/sunnet.dir/src/Service.cpp.o"
+},
+{
+  "directory": "/home/liyi/桌面/skynet/build",
+  "command": "/usr/bin/c++  -I/home/liyi/桌面/skynet/include -I/home/liyi/桌面/skynet/./3rd/lua-5.3.5/src -g -o CMakeFiles/sunnet.dir/src/SocketWorker.cpp.o -c /home/liyi/桌面/skynet/src/SocketWorker.cpp",
+  "file": "/home/liyi/桌面/skynet/src/SocketWorker.cpp",
+  "output": "CMakeFiles/sunnet.dir/src/SocketWorker.cpp.o"
+},
+{
+  "directory": "/home/liyi/桌面/skynet/build",
+  "command": "/usr/bin/c++  -I/home/liyi/桌面/skynet/include -I/home/liyi/桌面/skynet/./3rd/lua-5.3.5/src -g -o CMakeFiles/sunnet.dir/src/Sunnet.cpp.o -c /home/liyi/桌面/skynet/src/Sunnet.cpp",
+  "file": "/home/liyi/桌面/skynet/src/Sunnet.cpp",
+  "output": "CMakeFiles/sunnet.dir/src/Sunnet.cpp.o"
+},
+{
+  "directory": "/home/liyi/桌面/skynet/build",
+  "command": "/usr/bin/c++  -I/home/liyi/桌面/skynet/include -I/home/liyi/桌面/skynet/./3rd/lua-5.3.5/src -g -o CMakeFiles/sunnet.dir/src/Worker.cpp.o -c /home/liyi/桌面/skynet/src/Worker.cpp",
+  "file": "/home/liyi/桌面/skynet/src/Worker.cpp",
+  "output": "CMakeFiles/sunnet.dir/src/Worker.cpp.o"
+}
+]
